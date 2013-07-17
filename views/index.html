@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function () {
+		$('#submit').bind('click',function () {
+			var name = $('#username').val();
+			var pass = $('#userpass').val();
+			$.ajax({
+				type: 'POST',
+				cache: false,
+				dataType: 'json',
+				url: '/token',
+				headers: { username: name, userpass: pass }
+			}).success(setToken);
+		});
+
+	});
+
+	function setToken (token) {
+		alert(token.token);
+	}
+	</script>
+</head>
+<body>
+	<h1 style="color:#CACACA">Index</h1>
+	userName: <input type="text" id="username"/>
+	userPass: <input type="pasword" id="userpass"/>
+	<a href="javascript:void(null);" id="submit">login</a>
+</body>
+</html>
