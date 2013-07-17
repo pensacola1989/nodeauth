@@ -2,8 +2,13 @@
 <html>
 <head>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+	<script type="text/javascript" src="/javascripts/underscore-min.js"></script>
+	<script type="text/javascript" src="/javascripts/backbone-min.js"></script>
 	<script type="text/javascript">
+	var user;
+
 	$(document).ready(function () {
+		renderView('login');
 		$('#submit').bind('click',function () {
 			var name = $('#username').val();
 			var pass = $('#userpass').val();
@@ -18,15 +23,41 @@
 
 	});
 
-	function setToken (token) {
-		alert(token.token);
+	function init () {
+		if(!user) {
+			renderView('login');
+		}
 	}
+
+	function setToken (token) {
+		if(token) {
+			user = 'fuck';
+		}
+		renderView('person');
+	}
+
+	function renderView (id) {
+		if(!user) {
+			id = 'login';
+		} 
+		var template = $('#' + id);
+		$('.container').html(template.html());
+	}
+
 	</script>
 </head>
 <body>
-	<h1 style="color:#CACACA">Index</h1>
-	userName: <input type="text" id="username"/>
-	userPass: <input type="pasword" id="userpass"/>
-	<a href="javascript:void(null);" id="submit">login</a>
+	<div class="container">
+		
+	</div>
+	<div id="login" style="display:none;">
+		<h1 style="color:#CACACA">Index</h1>
+		userName: <input type="text" id="username"/>
+		userPass: <input type="pasword" id="userpass"/>
+		<a href="javascript:void(null);" id="submit">login</a>		
+	</div>
+	<div id="person" style="display:none;">
+		<h1>This is a personal Page,need Authorize!</h1>
+	</div>
 </body>
 </html>

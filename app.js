@@ -7,7 +7,7 @@ var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
   , http = require('http')
-  , jwt = require('jwt-simple')
+  , config = require('./config')
   , path = require('path');
 
 var app = express();
@@ -31,21 +31,7 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-app.get('/login',function (req,res) {
-	res.render('index', { title: 'Express' });
-});
-
-app.post('/token',function (req,res) {
-	var username = req.headers.username;
-	var password = req.headers.userpass;
-
-	if(username == 'fuck' && password == 'you') {
-		var token = jwt.encode({ username: username },'www');
-		res.json({ token: token });
-	} else {
-		res.send(401,'Not Authenicated!');
-	}
-})
+config.setRoute(app);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
