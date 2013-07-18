@@ -4,51 +4,38 @@
 	<script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
 	<script type="text/javascript" src="/javascripts/underscore-min.js"></script>
 	<script type="text/javascript" src="/javascripts/backbone-min.js"></script>
+	<script type="text/javascript" src="/javascripts/main.js"></script>
 	<script type="text/javascript">
-	var user;
+	// var user;
 
-	$(document).ready(function () {
-		renderView('login');
-		$('#submit').bind('click',function () {
-			var name = $('#username').val();
-			var pass = $('#userpass').val();
-			$.ajax({
-				type: 'POST',
-				cache: false,
-				dataType: 'json',
-				url: '/token',
-				headers: { username: name, userpass: pass }
-			}).success(setToken);
-		});
+	// $(document).ready(function () {
+	// 	renderView('login');
+	// 	$('#submit').bind('click',function () {
+	// 		var name = $('#username').val();
+	// 		var pass = $('#userpass').val();
+	// 		$.ajax({
+	// 			type: 'POST',
+	// 			cache: false,
+	// 			dataType: 'json',
+	// 			url: '/token',
+	// 			headers: { username: name, userpass: pass }
+	// 		}).success(setToken);
+	// 	});
 
-	});
+	// });
 
-	function init () {
-		if(!user) {
-			renderView('login');
-		}
-	}
 
-	function setToken (token) {
-		if(token) {
-			user = 'fuck';
-		}
-		renderView('person');
-	}
-
-	function renderView (id) {
-		if(!user) {
-			id = 'login';
-		} 
-		var template = $('#' + id);
-		$('.container').html(template.html());
-	}
 
 	</script>
 </head>
 <body>
 	<div class="container">
 		
+	</div>
+	<div id="index" style="display:none;">
+		<h1>Index Page,</h1>
+		<p>click to login</p>
+		<a id="sign" href="javascript:void(null);">sign in</a>
 	</div>
 	<div id="login" style="display:none;">
 		<h1 style="color:#CACACA">Index</h1>
