@@ -12,15 +12,9 @@ config.auth = function (req,res,next) {
 };
 
 config.setRoute = function (app) {
-	app.get('/',function (req,res) {
-		res.render('index', { title: 'Express' });
-	});
 
-	app.get('/login',function (req,res) {
-		res.render('index', { title: 'Express' });
-	});
 
-	app.post('/token',function (req,res) {
+	app.post('api/token',function (req,res) {
 		var username = req.headers.username;
 		var password = req.headers.userpass;
 
@@ -33,9 +27,14 @@ config.setRoute = function (app) {
 		}
 	});
 
-	app.get('/person',config.auth,function (req,res) {
-		res.render('person');
+	app.get('*',function (req,res,next) {
+		var tag = (req.url.indexOf('/javascript') == 0) || (req.url.indexOf('/api') == 0);
+		if(tag) 
+			return next();
+		res.render('index', { title: 'Express' });
 	});
+
+
 }
 
 exports.setRoute = config.setRoute;

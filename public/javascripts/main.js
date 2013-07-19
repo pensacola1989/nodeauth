@@ -37,7 +37,7 @@ Site.Router = Backbone.Router.extend({
 
 	person: function () {
 		if(!Site.user) {
-			this.navigate('',true);
+			this.navigate('login',true);
 			return;
 		}
 		this.view = this.views.person;
@@ -46,7 +46,7 @@ Site.Router = Backbone.Router.extend({
 
 	login: function () {
 		if(Site.user) {
-			(new Site.View.index).render();	
+			this.navigate('person',true);
 		}
 		this.view = this.views.login;
 		this.view.render();
@@ -68,8 +68,9 @@ Site.View.index = Backbone.View.extend({
 	},
 
 	sign: function () {
-		var view = new Site.View.login();
-		view.render();
+		Site.router.navigate('login',true);
+		// var view = new Site.View.login();
+		// view.render();
 	},
 
 	render:function () {
@@ -121,7 +122,7 @@ Site.View.person = Backbone.View.extend({
 Site.init = function () {
 
 	Site.router = new Site.Router();
-	Backbone.history.start();
+	Backbone.history.start({ pushState: false });
 	// Site.user = { name: 'www', age: 25 };
 }
 $(document).ready(function () {
