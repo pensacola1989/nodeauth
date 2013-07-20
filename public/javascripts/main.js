@@ -36,7 +36,7 @@ Site.Router = Backbone.Router.extend({
 	},
 
 	person: function () {
-		if(!Site.user) {
+		if(!App.user) {
 			this.navigate('login',true);
 			return;
 		}
@@ -45,8 +45,9 @@ Site.Router = Backbone.Router.extend({
 	},
 
 	login: function () {
-		if(Site.user) {
+		if(App.user) {
 			this.navigate('person',true);
+			return;
 		}
 		this.view = this.views.login;
 		this.view.render();
@@ -94,8 +95,20 @@ Site.View.login = Backbone.View.extend({
 	},
 
 	getLogin: function () {
-		Site.user = { name: 'www', sex: 25 };
-		(new Site.View.person).render();
+		userdata = { username: 'fuck', userpass: 'you' };
+		$.ajax({
+			url: '/api/token',
+			type: 'POST',
+			headers: userdata,
+			dataType: 'json',
+		}).success(function (data) {
+			App.user = 'www';
+			Cookies.set('token',data.token);
+		}).error(function (err) {
+			console.log(err);
+		}).done(function () {
+			console.log('complete');
+		});
 
 	},
 
@@ -122,9 +135,6 @@ Site.View.person = Backbone.View.extend({
 Site.init = function () {
 
 	Site.router = new Site.Router();
-	Backbone.history.start({ pushState: false });
-	// Site.user = { name: 'www', age: 25 };
+	Backbone.history.start({ pushState: true });
+	// App.user = { name: 'www', age: 25 };
 }
-$(document).ready(function () {
-	Site.init();
-});

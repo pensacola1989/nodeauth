@@ -14,7 +14,7 @@ config.auth = function (req,res,next) {
 config.setRoute = function (app) {
 
 
-	app.post('api/token',function (req,res) {
+	app.post('/api/token',function (req,res) {
 		var username = req.headers.username;
 		var password = req.headers.userpass;
 
@@ -31,7 +31,8 @@ config.setRoute = function (app) {
 		var tag = (req.url.indexOf('/javascript') == 0) || (req.url.indexOf('/api') == 0);
 		if(tag) 
 			return next();
-		res.render('index', { title: 'Express' });
+		var isAuth = req.headers.token ? true : false;
+		res.render('index', { auth: isAuth });
 	});
 
 

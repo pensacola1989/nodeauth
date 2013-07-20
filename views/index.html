@@ -4,7 +4,17 @@
 	<script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
 	<script type="text/javascript" src="/javascripts/underscore-min.js"></script>
 	<script type="text/javascript" src="/javascripts/backbone-min.js"></script>
+	<script type="text/javascript" src="/javascripts/cookies.min.js"></script>
 	<script type="text/javascript" src="/javascripts/main.js"></script>
+	<script type="text/javascript">
+	var App = App || {};
+		$(document).ready(function () {
+			Site.init();
+			<% if(auth) { %>
+			App.user = 'www';
+			<% } %>
+		});
+	</script>
 </head>
 <body>
 	<div class="container">
