@@ -12,6 +12,7 @@ Site.Model.user = Backbone.Model.extend({
 
 Site.Router = Backbone.Router.extend({
 	routes: {
+		'index': 'index',
 		'': 'index',
 		'login': 'login',
 		'user': 'users',
@@ -104,6 +105,7 @@ Site.View.login = Backbone.View.extend({
 		}).success(function (data) {
 			App.user = 'www';
 			Cookies.set('token',data.token);
+			Site.router.navigate('person',true);
 		}).error(function (err) {
 			console.log(err);
 		}).done(function () {
@@ -123,12 +125,20 @@ Site.View.person = Backbone.View.extend({
 
 	el: '.container',
 
+	events: {
+		'click #idx': 'gotoIndex'
+	},
+
+	gotoIndex: function () {
+		Site.router.navigate('index',true);
+	},
+
 	initialize: function () {
 			
 	},
 
 	render: function () {	
-		$(this.el).html('<h1>this is a personal Page!');
+		$(this.el).html('<h1>this is a personal Page!<br/> <a id="idx" href="javascript:void(null);">Index</a>');
 	}
 });
 
