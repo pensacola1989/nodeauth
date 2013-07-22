@@ -22,6 +22,7 @@ app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser('www'));
+app.use(express.session({ secret: 'secret'}));
 
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));

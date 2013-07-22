@@ -126,7 +126,24 @@ Site.View.person = Backbone.View.extend({
 	el: '.container',
 
 	events: {
-		'click #idx': 'gotoIndex'
+		'click #idx': 'gotoIndex',
+		'click #ta': 'testApi'
+	},
+
+	testApi: function () {
+		$.ajax({
+			url: '/api/test',
+			type: 'POST',
+			data: { sex: 'female' },
+			headers: { token: Cookies.get('token') },
+			dataType: 'json',
+		}).success(function (data) {
+			console.log(data);
+		}).error(function () {
+			// body...
+		}).done(function () {
+			// body...
+		});
 	},
 
 	gotoIndex: function () {
@@ -139,6 +156,7 @@ Site.View.person = Backbone.View.extend({
 
 	render: function () {	
 		$(this.el).html('<h1>this is a personal Page!<br/> <a id="idx" href="javascript:void(null);">Index</a>');
+		$(this.el).append('<a id="ta" href="javascript:void(null);">Test Api</a>');
 	}
 });
 

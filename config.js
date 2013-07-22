@@ -35,6 +35,11 @@ config.setRoute = function (app) {
 		res.render('index', { auth: isAuth });
 	});
 
+	app.post('/api/test',config.auth,function (req,res) {
+		res.json({
+			'fuck': 'you'
+		});
+	});
 
 }
 
