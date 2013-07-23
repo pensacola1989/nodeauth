@@ -32,6 +32,10 @@ Site.Router = Backbone.Router.extend({
 	},
 
 	index: function () {
+		if(App.user) {
+			this.navigate('person',true);
+			return;
+		}
 		this.view = this.views.index;
 		this.view.render();
 	},
@@ -127,26 +131,38 @@ Site.View.person = Backbone.View.extend({
 
 	events: {
 		'click #idx': 'gotoIndex',
-		'click #ta': 'testApi'
+		'click #ta': 'testApi',
+		'click #logout': 'logout'
 	},
 
 	testApi: function () {
-		$.ajax({
-			url: '/api/test',
-			type: 'POST',
-			data: { sex: 'female' },
-			headers: { token: Cookies.get('token') },
-			dataType: 'json',
-		}).success(function (data) {
-			console.log(data);
-		}).error(function () {
-			// body...
-		}).done(function () {
-			// body...
+		var testModel = Backbone.Model.extend({ 
+			urlRoot: '/api/test'
 		});
+		var ret = (new testModel({ id: 1 })).fetch();
+		console.log(ret);
+		// $.ajax({
+		// 	url: '/api/test',
+		// 	type: 'POST',
+		// 	data: { sex: 'female' },
+		// 	headers: { token: Cookies.get('token') },
+		// 	dataType: 'json',
+		// }).success(function (data) {
+		// 	console.log(data);
+		// }).error(function () {
+		// 	// body...
+		// }).done(function () {
+		// 	// body...
+		// });
 	},
 
 	gotoIndex: function () {
+		Site.router.navigate('index',true);
+	},
+
+	logout: function () {
+		App.user = '';
+		Cookies.set('token','');
 		Site.router.navigate('index',true);
 	},
 
@@ -157,6 +173,7 @@ Site.View.person = Backbone.View.extend({
 	render: function () {	
 		$(this.el).html('<h1>this is a personal Page!<br/> <a id="idx" href="javascript:void(null);">Index</a>');
 		$(this.el).append('<a id="ta" href="javascript:void(null);">Test Api</a>');
+		$(this.el).append('<a id="logout" style="color:purple;margin-left:50px;" href="javascript:void(null);">Logout</a>')
 	}
 });
 

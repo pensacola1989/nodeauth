@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style type="text/css">
+	a{ color: lightgreen; }
+</style>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
 	<script type="text/javascript" src="/javascripts/underscore-min.js"></script>
 	<script type="text/javascript" src="/javascripts/backbone-min.js"></script>
@@ -9,10 +12,11 @@
 	<script type="text/javascript">
 	var App = App || {};
 		$(document).ready(function () {
-			Site.init();
 			<% if(auth) { %>
 			App.user = 'www';
 			<% } %>
+
+			Site.init();
 		});
 	</script>
 </head>
