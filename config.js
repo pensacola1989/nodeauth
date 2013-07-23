@@ -3,13 +3,18 @@ var jwt = require('jwt-simple');
 
 var config = config || {};
 config.auth = function (req,res,next) {
-	if(!req.headers.token)
-		res.send(401,'need AuthToken!');
-	var decoded = jwt.decode(req.headers.token, 'www');
-	if(decoded) {
-		next()
+	var decoded;
+
+	if(req.headers.token) {
+		console.log('...............................')
+		decoded = jwt.decode(req.headers.token, 'www');	
+		if(decoded) {
+			console.log(decoded);
+			next();
+		} 
 	} else {
-		res.send(401,'Not Authorized!');		
+		res.send(401,'Not Authenicated!');
+		res.end();		
 	}
 };
 
@@ -47,7 +52,7 @@ config.setRoute = function (app) {
 	});
 
 	app.get('/api/test/:id',config.auth,function (req,res) {
-		return json({
+		res.json({
 			id: req.params.id
 		});
 	});

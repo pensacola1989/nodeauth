@@ -139,8 +139,12 @@ Site.View.person = Backbone.View.extend({
 		var testModel = Backbone.Model.extend({ 
 			urlRoot: '/api/test'
 		});
-		var ret = (new testModel({ id: 1 })).fetch();
-		console.log(ret);
+		(new testModel({ id: 1 }))
+		.fetch({
+			success: function (data) {
+				alert(data.id);
+			}
+		});
 		// $.ajax({
 		// 	url: '/api/test',
 		// 	type: 'POST',
@@ -178,7 +182,11 @@ Site.View.person = Backbone.View.extend({
 });
 
 Site.init = function () {
-
+	var sync = Backbone.sync;
+	Backbone.sync = function (method, model, options) {
+		options.headers = { 'token': Cookies.get('token') }	;
+		sync(method, model, options);
+	};
 	Site.router = new Site.Router();
 	Backbone.history.start({ pushState: true });
 	// App.user = { name: 'www', age: 25 };
